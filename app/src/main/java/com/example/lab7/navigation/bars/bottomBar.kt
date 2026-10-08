@@ -9,9 +9,9 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.lab7.navigation.AppGraph
 import com.example.lab7.navigation.CharacterGraph
 import com.example.lab7.navigation.LocationGraph
 import com.example.lab7.navigation.ProfileDestination
@@ -28,7 +28,7 @@ fun LabBottomBar(navController: NavHostController) {
             selected = currentRoute?.contains("CharacterGraph") == true || currentRoute?.contains("CharacterListDestination") == true || currentRoute?.contains("CharacterDetailDestination") == true,
             onClick = {
                 navController.navigate(CharacterGraph) {
-                    popUpTo(navController.graph.findStartDestination().id) {
+                    popUpTo<AppGraph> {
                         saveState = true
                     }
                     launchSingleTop = true
@@ -42,7 +42,7 @@ fun LabBottomBar(navController: NavHostController) {
             selected = currentRoute?.contains("LocationGraph") == true || currentRoute?.contains("LocationListDestination") == true || currentRoute?.contains("LocationDetailDestination") == true,
             onClick = {
                 navController.navigate(LocationGraph) {
-                    popUpTo(navController.graph.findStartDestination().id) {
+                    popUpTo<AppGraph> {
                         saveState = true
                     }
                     launchSingleTop = true
@@ -56,7 +56,7 @@ fun LabBottomBar(navController: NavHostController) {
             selected = currentRoute?.contains("ProfileDestination") == true,
             onClick = {
                 navController.navigate(ProfileDestination) {
-                    popUpTo(navController.graph.findStartDestination().id) {
+                    popUpTo<AppGraph> {
                         saveState = true
                     }
                     launchSingleTop = true

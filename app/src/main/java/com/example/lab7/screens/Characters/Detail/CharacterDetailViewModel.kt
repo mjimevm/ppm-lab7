@@ -7,6 +7,7 @@ import androidx.navigation.toRoute
 import com.example.lab7.navigation.CharacterDetailDestination
 import com.example.lab7.screens.Characters.Classes.Character
 import com.example.lab7.screens.Characters.Classes.CharacterDb
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,12 +33,15 @@ class CharacterDetailViewModel(
     private val _uiState = MutableStateFlow(CharacterDetailUiState())
     val uiState: StateFlow<CharacterDetailUiState> = _uiState.asStateFlow()
 
+    private var loadJob: Job? = null
+
     init {
         loadCharacter()
     }
 
     fun loadCharacter() {
-        viewModelScope.launch {
+        loadJob?.cancel()
+        loadJob = viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, hasError = false) }
             delay(2000)
             try {
@@ -50,6 +54,7 @@ class CharacterDetailViewModel(
     }
 
     fun setError() {
+        loadJob?.cancel()
         _uiState.update { it.copy(isLoading = false, hasError = true) }
     }
 }

@@ -7,6 +7,7 @@ import androidx.navigation.toRoute
 import com.example.lab7.navigation.LocationDetailDestination
 import com.example.lab7.screens.Locations.Classes.Location
 import com.example.lab7.screens.Locations.Classes.LocationDb
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,12 +33,15 @@ class LocationDetailViewModel(
     private val _uiState = MutableStateFlow(LocationDetailUiState())
     val uiState: StateFlow<LocationDetailUiState> = _uiState.asStateFlow()
 
+    private var loadJob: Job? = null
+
     init {
         loadLocation()
     }
 
     fun loadLocation() {
-        viewModelScope.launch {
+        loadJob?.cancel()
+        loadJob = viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, hasError = false) }
             delay(2000)
             try {
@@ -50,6 +54,7 @@ class LocationDetailViewModel(
     }
 
     fun setError() {
+        loadJob?.cancel()
         _uiState.update { it.copy(isLoading = false, hasError = true) }
     }
 }

@@ -6,6 +6,9 @@ import kotlinx.serialization.Serializable
 object LoginDestination
 
 @Serializable
+object AppGraph
+
+@Serializable
 object CharacterGraph
 
 @Serializable
