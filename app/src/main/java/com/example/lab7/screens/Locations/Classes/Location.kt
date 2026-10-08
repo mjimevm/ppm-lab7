@@ -1,4 +1,4 @@
-package com.example.lab7
+package com.example.lab7.screens.Locations.Classes
 
 data class Location(
     val id: Int,

@@ -1,4 +1,4 @@
-package com.example.lab7
+package com.example.lab7.navigation.bars
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Group

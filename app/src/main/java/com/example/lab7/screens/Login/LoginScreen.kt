@@ -1,4 +1,4 @@
-package com.example.lab7.screens
+package com.example.lab7.screens.Login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

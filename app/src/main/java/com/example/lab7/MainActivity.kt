@@ -10,7 +10,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.example.lab7.navigation.CharacterDetailDestination
 import com.example.lab7.navigation.CharacterGraph
 import com.example.lab7.navigation.CharacterListDestination
@@ -19,12 +18,12 @@ import com.example.lab7.navigation.LocationGraph
 import com.example.lab7.navigation.LocationListDestination
 import com.example.lab7.navigation.LoginDestination
 import com.example.lab7.navigation.ProfileDestination
-import com.example.lab7.screens.CharacterDetailScreen
-import com.example.lab7.screens.CharacterListScreen
-import com.example.lab7.screens.LocationDetailScreen
-import com.example.lab7.screens.LocationListScreen
-import com.example.lab7.screens.LoginScreen
-import com.example.lab7.screens.ProfileScreen
+import com.example.lab7.screens.Characters.Detail.CharacterDetailScreen
+import com.example.lab7.screens.Characters.List.CharacterListScreen
+import com.example.lab7.screens.Locations.List.LocationListScreen
+import com.example.lab7.screens.Locations.Detail.LocationDetailScreen
+import com.example.lab7.screens.Login.LoginScreen
+import com.example.lab7.screens.Profile.ProfileScreen
 import com.example.lab7.ui.theme.Lab7Theme
 
 class MainActivity : ComponentActivity() {
@@ -57,10 +56,8 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
-                        composable<CharacterDetailDestination> { backStackEntry ->
-                            val details: CharacterDetailDestination = backStackEntry.toRoute()
+                        composable<CharacterDetailDestination> {
                             CharacterDetailScreen(
-                                characterId = details.characterId,
                                 onBackClick = {
                                     navController.popBackStack()
                                 }
@@ -77,10 +74,8 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
-                        composable<LocationDetailDestination> { backStackEntry ->
-                            val details: LocationDetailDestination = backStackEntry.toRoute()
+                        composable<LocationDetailDestination> {
                             LocationDetailScreen(
-                                locationId = details.locationId,
                                 onBackClick = {
                                     navController.popBackStack()
                                 }
@@ -127,7 +122,7 @@ fun ListPreview() {
 @Composable
 fun DetailPreview() {
     Lab7Theme {
-        CharacterDetailScreen(characterId = 1, onBackClick = {})
+        CharacterDetailScreen(onBackClick = {})
     }
 }
 
@@ -143,7 +138,7 @@ fun LocationScreenPreview() {
 @Composable
 fun LocationDetailScreenPreview() {
     Lab7Theme {
-        LocationDetailScreen(locationId = 1, onBackClick = {})
+        LocationDetailScreen(onBackClick = {})
     }
 }
 

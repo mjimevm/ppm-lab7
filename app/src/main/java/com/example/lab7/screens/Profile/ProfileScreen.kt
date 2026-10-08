@@ -1,4 +1,4 @@
-package com.example.lab7.screens
+package com.example.lab7.screens.Profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,8 +30,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.lab7.LabBottomBar
+import com.example.lab7.navigation.bars.LabBottomBar
 import com.example.lab7.R
+import com.example.lab7.screens.Characters.Detail.DetailRow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
