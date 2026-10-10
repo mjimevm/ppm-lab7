@@ -1,5 +1,7 @@
 package com.example.lab7.screens.Characters.List
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,8 +36,9 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.lab7.navigation.bars.LabBottomBar
 import com.example.lab7.screens.Characters.Classes.Character
-import com.example.lab7.screens.ErrorScreen
-import com.example.lab7.screens.LoadingScreen
+import com.example.lab7.core.ui.commonComponents.ErrorScreen
+import com.example.lab7.core.ui.commonComponents.LoadingScreen
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +47,12 @@ fun CharacterListScreen(
     viewModel: CharacterListViewModel = viewModel(),
     onCharacterClick: (Int) -> Unit
 ) {
+    val context = LocalContext.current
     val state by viewModel.uiState.collectAsState()
+
+    BackHandler {
+        (context as? Activity)?.finish()
+    }
 
     Scaffold(
         topBar = {

@@ -2,7 +2,6 @@ package com.example.lab7.screens.Locations.List
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.lab7.screens.Locations.Classes.Location
 import com.example.lab7.screens.Locations.Classes.LocationDb
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -12,12 +11,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class LocationListUiState(
-    val isLoading: Boolean = true,
-    val data: List<Location> = emptyList(),
-    val hasError: Boolean = false
-)
-
 class LocationListViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(LocationListUiState())
     val uiState: StateFlow<LocationListUiState> = _uiState.asStateFlow()
@@ -25,7 +18,14 @@ class LocationListViewModel : ViewModel() {
     private var loadJob: Job? = null
 
     init {
-        loadLocations()
+        onEvent(LocationListEvent.LoadLocations)
+    }
+
+    fun onEvent(event: LocationListEvent) {
+        when (event) {
+            is LocationListEvent.LoadLocations -> loadLocations()
+            is LocationListEvent.SetError -> setError()
+        }
     }
 
     fun loadLocations() {

@@ -22,24 +22,31 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.lab7.navigation.bars.LabBottomBar
 import com.example.lab7.R
 import com.example.lab7.screens.Characters.Detail.DetailRow
+import com.example.lab7.screens.Login.SessionViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     navController: NavHostController = rememberNavController(),
+    viewModel: SessionViewModel = viewModel(),
     onLogoutClick: () -> Unit = {}
 ) {
+    val userName by viewModel.userName.collectAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -88,11 +95,15 @@ fun ProfileScreen(
                     .padding(horizontal = 48.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                DetailRow(label = "Nombre:", value = "María Jimena Vásquez")
+                DetailRow(label = "Nombre:", value = userName ?: "María Jimena Vásquez")
                 DetailRow(label = "Carnet:", value = "25092")
             }
             OutlinedButton(
-                onClick = onLogoutClick,
+                onClick = {
+                    viewModel.clearSession {
+                        onLogoutClick()
+                    }
+                },
                 modifier = Modifier.padding(16.dp),
                 shape = RoundedCornerShape(24.dp),
                 colors = ButtonDefaults.buttonColors(

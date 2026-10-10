@@ -2,7 +2,6 @@ package com.example.lab7.screens.Characters.List
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.lab7.screens.Characters.Classes.Character
 import com.example.lab7.screens.Characters.Classes.CharacterDb
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -12,12 +11,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class CharacterListUiState(
-    val isLoading: Boolean = true,
-    val data: List<Character> = emptyList(),
-    val hasError: Boolean = false
-)
-
 class CharacterListViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(CharacterListUiState())
     val uiState: StateFlow<CharacterListUiState> = _uiState.asStateFlow()
@@ -25,7 +18,14 @@ class CharacterListViewModel : ViewModel() {
     private var loadJob: Job? = null
 
     init {
-        loadCharacters()
+        onEvent(CharacterListEvent.LoadCharacters)
+    }
+
+    fun onEvent(event: CharacterListEvent) {
+        when (event) {
+            is CharacterListEvent.LoadCharacters -> loadCharacters()
+            is CharacterListEvent.SetError -> setError()
+        }
     }
 
     fun loadCharacters() {

@@ -24,9 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.lab7.core.ui.commonComponents.ErrorScreen
 import com.example.lab7.screens.Characters.Detail.DetailRow
-import com.example.lab7.screens.ErrorScreen
-import com.example.lab7.screens.LoadingScreen
+import com.example.lab7.core.ui.commonComponents.LoadingScreen
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

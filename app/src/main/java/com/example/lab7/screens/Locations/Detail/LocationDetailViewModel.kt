@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.lab7.navigation.LocationDetailDestination
-import com.example.lab7.screens.Locations.Classes.Location
 import com.example.lab7.screens.Locations.Classes.LocationDb
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -14,12 +13,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-data class LocationDetailUiState(
-    val isLoading: Boolean = true,
-    val data: Location? = null,
-    val hasError: Boolean = false
-)
 
 class LocationDetailViewModel(
     savedStateHandle: SavedStateHandle
@@ -36,7 +29,14 @@ class LocationDetailViewModel(
     private var loadJob: Job? = null
 
     init {
-        loadLocation()
+        onEvent(LocationDetailEvent.LoadLocation)
+    }
+
+    fun onEvent(event: LocationDetailEvent) {
+        when (event) {
+            is LocationDetailEvent.LoadLocation -> loadLocation()
+            is LocationDetailEvent.SetError -> setError()
+        }
     }
 
     fun loadLocation() {

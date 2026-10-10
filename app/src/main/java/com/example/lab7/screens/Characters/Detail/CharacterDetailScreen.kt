@@ -31,8 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.lab7.screens.ErrorScreen
-import com.example.lab7.screens.LoadingScreen
+import com.example.lab7.core.ui.commonComponents.ErrorScreen
+import com.example.lab7.core.ui.commonComponents.LoadingScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

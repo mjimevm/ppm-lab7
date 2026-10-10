@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.lab7.navigation.CharacterDetailDestination
-import com.example.lab7.screens.Characters.Classes.Character
 import com.example.lab7.screens.Characters.Classes.CharacterDb
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -14,12 +13,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-data class CharacterDetailUiState(
-    val isLoading: Boolean = true,
-    val data: Character? = null,
-    val hasError: Boolean = false
-)
 
 class CharacterDetailViewModel(
     savedStateHandle: SavedStateHandle
@@ -36,7 +29,14 @@ class CharacterDetailViewModel(
     private var loadJob: Job? = null
 
     init {
-        loadCharacter()
+        onEvent(CharacterDetailEvent.LoadCharacter)
+    }
+
+    fun onEvent(event: CharacterDetailEvent) {
+        when (event) {
+            is CharacterDetailEvent.LoadCharacter -> loadCharacter()
+            is CharacterDetailEvent.SetError -> setError()
+        }
     }
 
     fun loadCharacter() {
