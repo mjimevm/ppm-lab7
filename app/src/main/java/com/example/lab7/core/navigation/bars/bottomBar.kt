@@ -1,4 +1,4 @@
-package com.example.lab7.navigation.bars
+package com.example.lab7.core.navigation.bars
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Group
@@ -11,10 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.lab7.navigation.AppGraph
-import com.example.lab7.navigation.CharacterGraph
-import com.example.lab7.navigation.LocationGraph
-import com.example.lab7.navigation.ProfileDestination
+import com.example.lab7.core.navigation.AppGraph
+import com.example.lab7.core.navigation.CharacterGraph
+import com.example.lab7.core.navigation.LocationGraph
+import com.example.lab7.core.navigation.ProfileDestination
 
 @Composable
 fun LabBottomBar(navController: NavHostController) {

@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.lab7.navigation.bars.LabBottomBar
+import com.example.lab7.core.navigation.bars.LabBottomBar
 import com.example.lab7.R
 import com.example.lab7.screens.Characters.Detail.DetailRow
 import com.example.lab7.screens.Login.SessionViewModel

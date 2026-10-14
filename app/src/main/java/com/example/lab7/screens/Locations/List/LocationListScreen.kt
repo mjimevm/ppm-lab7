@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.lab7.navigation.bars.LabBottomBar
+import com.example.lab7.core.navigation.bars.LabBottomBar
 import com.example.lab7.core.ui.commonComponents.ErrorScreen
 import com.example.lab7.core.ui.commonComponents.LoadingScreen
 import com.example.lab7.screens.Locations.Classes.Location

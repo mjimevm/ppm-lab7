@@ -1,4 +1,4 @@
-package com.example.lab7.navigation
+package com.example.lab7.core.navigation
 
 import kotlinx.serialization.Serializable
 

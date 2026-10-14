@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.example.lab7.navigation.CharacterDetailDestination
+import com.example.lab7.core.navigation.CharacterDetailDestination
 import com.example.lab7.screens.Characters.Classes.CharacterDb
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
