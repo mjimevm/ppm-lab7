@@ -19,12 +19,12 @@ import com.example.lab7.core.navigation.LocationGraph
 import com.example.lab7.core.navigation.LocationListDestination
 import com.example.lab7.core.navigation.LoginDestination
 import com.example.lab7.core.navigation.ProfileDestination
-import com.example.lab7.screens.Characters.Detail.CharacterDetailScreen
-import com.example.lab7.screens.Characters.List.CharacterListScreen
-import com.example.lab7.screens.Locations.Detail.LocationDetailScreen
-import com.example.lab7.screens.Locations.List.LocationListScreen
-import com.example.lab7.screens.Login.LoginScreen
-import com.example.lab7.screens.Profile.ProfileScreen
+import com.example.lab7.ui.screens.Characters.Detail.CharacterDetailScreen
+import com.example.lab7.ui.screens.Characters.List.CharacterListScreen
+import com.example.lab7.ui.screens.Locations.Detail.LocationDetailScreen
+import com.example.lab7.ui.screens.Locations.List.LocationListScreen
+import com.example.lab7.ui.screens.Login.LoginScreen
+import com.example.lab7.ui.screens.Profile.ProfileScreen
 import com.example.lab7.ui.theme.Lab7Theme
 
 class MainActivity : ComponentActivity() {
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     startDestination = LoginDestination
                 ) {
                     composable<LoginDestination> {
-                        LoginScreen(
+                        _root_ide_package_.com.example.lab7.ui.screens.Login.LoginScreen(
                             onStartClick = {
                                 navController.navigate(AppGraph) {
                                     popUpTo(LoginDestination) { inclusive = true }
@@ -51,15 +51,19 @@ class MainActivity : ComponentActivity() {
                     navigation<AppGraph>(startDestination = CharacterGraph) {
                         navigation<CharacterGraph>(startDestination = CharacterListDestination) {
                             composable<CharacterListDestination> {
-                                CharacterListScreen(
+                                _root_ide_package_.com.example.lab7.ui.screens.Characters.List.CharacterListScreen(
                                     navController = navController,
                                     onCharacterClick = { id ->
-                                        navController.navigate(CharacterDetailDestination(characterId = id))
+                                        navController.navigate(
+                                            CharacterDetailDestination(
+                                                characterId = id
+                                            )
+                                        )
                                     }
                                 )
                             }
                             composable<CharacterDetailDestination> {
-                                CharacterDetailScreen(
+                                _root_ide_package_.com.example.lab7.ui.screens.Characters.Detail.CharacterDetailScreen(
                                     onBackClick = {
                                         navController.popBackStack()
                                     }
@@ -69,7 +73,7 @@ class MainActivity : ComponentActivity() {
 
                         navigation<LocationGraph>(startDestination = LocationListDestination) {
                             composable<LocationListDestination> {
-                                LocationListScreen(
+                                _root_ide_package_.com.example.lab7.ui.screens.Locations.List.LocationListScreen(
                                     navController = navController,
                                     onLocationClick = { id ->
                                         navController.navigate(LocationDetailDestination(locationId = id))
@@ -77,7 +81,7 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             composable<LocationDetailDestination> {
-                                LocationDetailScreen(
+                                _root_ide_package_.com.example.lab7.ui.screens.Locations.Detail.LocationDetailScreen(
                                     onBackClick = {
                                         navController.popBackStack()
                                     }
@@ -86,7 +90,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable<ProfileDestination> {
-                            ProfileScreen(
+                            _root_ide_package_.com.example.lab7.ui.screens.Profile.ProfileScreen(
                                 navController = navController,
                                 onLogoutClick = {
                                     navController.navigate(LoginDestination) {
@@ -109,7 +113,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun LoginPreview() {
     Lab7Theme {
-        LoginScreen(onStartClick = {})
+        _root_ide_package_.com.example.lab7.ui.screens.Login.LoginScreen(onStartClick = {})
     }
 }
 
@@ -117,7 +121,8 @@ fun LoginPreview() {
 @Composable
 fun ListPreview() {
     Lab7Theme {
-        CharacterListScreen(onCharacterClick = {})
+        _root_ide_package_.com.example.lab7.ui.screens.Characters.List.CharacterListScreen(
+            onCharacterClick = {})
     }
 }
 
@@ -125,7 +130,8 @@ fun ListPreview() {
 @Composable
 fun DetailPreview() {
     Lab7Theme {
-        CharacterDetailScreen(onBackClick = {})
+        _root_ide_package_.com.example.lab7.ui.screens.Characters.Detail.CharacterDetailScreen(
+            onBackClick = {})
     }
 }
 
@@ -133,7 +139,8 @@ fun DetailPreview() {
 @Composable
 fun LocationScreenPreview() {
     Lab7Theme {
-        LocationListScreen(onLocationClick = {})
+        _root_ide_package_.com.example.lab7.ui.screens.Locations.List.LocationListScreen(
+            onLocationClick = {})
     }
 }
 
@@ -141,7 +148,8 @@ fun LocationScreenPreview() {
 @Composable
 fun LocationDetailScreenPreview() {
     Lab7Theme {
-        LocationDetailScreen(onBackClick = {})
+        _root_ide_package_.com.example.lab7.ui.screens.Locations.Detail.LocationDetailScreen(
+            onBackClick = {})
     }
 }
 
@@ -149,6 +157,6 @@ fun LocationDetailScreenPreview() {
 @Composable
 fun ProfileScreenPreview() {
     Lab7Theme {
-        ProfileScreen()
+        _root_ide_package_.com.example.lab7.ui.screens.Profile.ProfileScreen()
     }
 }
