@@ -1,9 +1,10 @@
-package com.example.lab7.ui.screens.Characters.Classes
+package com.example.lab7.screens.Characters.Classes
 
+import com.example.lab7.ui.screens.Characters.Classes.Character
 
 class CharacterDb {
-    private val characters: List<com.example.lab7.ui.screens.Characters.Classes.Character> = listOf(
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+    private val characters: List<Character> = listOf(
+        Character(
             1,
             "Rick Sanchez",
             "Alive",
@@ -11,7 +12,7 @@ class CharacterDb {
             "Male",
             "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             2,
             "Morty Smith",
             "Alive",
@@ -19,7 +20,7 @@ class CharacterDb {
             "Male",
             "https://rickandmortyapi.com/api/character/avatar/2.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             3,
             "Summer Smith",
             "Alive",
@@ -27,7 +28,7 @@ class CharacterDb {
             "Female",
             "https://rickandmortyapi.com/api/character/avatar/3.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             4,
             "Beth Smith",
             "Alive",
@@ -35,7 +36,7 @@ class CharacterDb {
             "Female",
             "https://rickandmortyapi.com/api/character/avatar/4.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             5,
             "Jerry Smith",
             "Alive",
@@ -43,7 +44,7 @@ class CharacterDb {
             "Male",
             "https://rickandmortyapi.com/api/character/avatar/5.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             6,
             "Abadango Cluster Princess",
             "Alive",
@@ -51,7 +52,7 @@ class CharacterDb {
             "Female",
             "https://rickandmortyapi.com/api/character/avatar/6.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             7,
             "Abradolf Lincler",
             "unknown",
@@ -59,7 +60,7 @@ class CharacterDb {
             "Male",
             "https://rickandmortyapi.com/api/character/avatar/7.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             8,
             "Adjudicator Rick",
             "Dead",
@@ -67,7 +68,7 @@ class CharacterDb {
             "Male",
             "https://rickandmortyapi.com/api/character/avatar/8.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             9,
             "Agency Director",
             "Dead",
@@ -75,7 +76,7 @@ class CharacterDb {
             "Male",
             "https://rickandmortyapi.com/api/character/avatar/9.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             10,
             "Alan Rails",
             "Dead",
@@ -83,7 +84,7 @@ class CharacterDb {
             "Male",
             "https://rickandmortyapi.com/api/character/avatar/10.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             11,
             "Albert Einstein",
             "Dead",
@@ -91,7 +92,7 @@ class CharacterDb {
             "Male",
             "https://rickandmortyapi.com/api/character/avatar/11.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             12,
             "Alexander",
             "Dead",
@@ -99,7 +100,7 @@ class CharacterDb {
             "Male",
             "https://rickandmortyapi.com/api/character/avatar/12.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             13,
             "Alien Googah",
             "unknown",
@@ -107,7 +108,7 @@ class CharacterDb {
             "unknown",
             "https://rickandmortyapi.com/api/character/avatar/13.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             14,
             "Alien Morty",
             "unknown",
@@ -115,7 +116,7 @@ class CharacterDb {
             "Male",
             "https://rickandmortyapi.com/api/character/avatar/14.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             15,
             "Alien Rick",
             "unknown",
@@ -123,7 +124,7 @@ class CharacterDb {
             "Male",
             "https://rickandmortyapi.com/api/character/avatar/15.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             16,
             "Amish Cyborg",
             "Dead",
@@ -131,7 +132,7 @@ class CharacterDb {
             "Male",
             "https://rickandmortyapi.com/api/character/avatar/16.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             17,
             "Annie",
             "Alive",
@@ -139,7 +140,7 @@ class CharacterDb {
             "Female",
             "https://rickandmortyapi.com/api/character/avatar/17.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             18,
             "Antenna Morty",
             "Alive",
@@ -147,7 +148,7 @@ class CharacterDb {
             "Male",
             "https://rickandmortyapi.com/api/character/avatar/18.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             19,
             "Antenna Rick",
             "unknown",
@@ -155,7 +156,7 @@ class CharacterDb {
             "Male",
             "https://rickandmortyapi.com/api/character/avatar/19.jpeg"
         ),
-        _root_ide_package_.com.example.lab7.ui.screens.Characters.Classes.Character(
+        Character(
             20,
             "Ants in my Eyes Johnson",
             "unknown",
@@ -165,11 +166,11 @@ class CharacterDb {
         )
     )
 
-    fun getAllCharacters(): List<com.example.lab7.ui.screens.Characters.Classes.Character> {
+    fun getAllCharacters(): List<Character> {
         return characters
     }
 
-    fun getCharacterById(id: Int): com.example.lab7.ui.screens.Characters.Classes.Character {
+    fun getCharacterById(id: Int): Character {
         return characters.first { it.id == id }
     }
 }

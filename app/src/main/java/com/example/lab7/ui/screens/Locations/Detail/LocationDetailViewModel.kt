@@ -1,35 +1,37 @@
 package com.example.lab7.ui.screens.Locations.Detail
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.lab7.core.navigation.LocationDetailDestination
-import com.example.lab7.ui.screens.Locations.Classes.LocationDb
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import com.example.lab7.data.local.AppDatabase
+import com.example.lab7.ui.screens.Locations.Classes.mapToModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LocationDetailViewModel(
+    application: Application,
     savedStateHandle: SavedStateHandle
-) : ViewModel() {
+) : AndroidViewModel(application) {
     private val locationId: Int = try {
         savedStateHandle.toRoute<LocationDetailDestination>().locationId
     } catch (e: Exception) {
         1
     }
 
+    private val locationDao = AppDatabase.getDatabase(application).locationDao()
+
     private val _uiState = MutableStateFlow(LocationDetailUiState())
     val uiState: StateFlow<LocationDetailUiState> = _uiState.asStateFlow()
 
-    private var loadJob: Job? = null
-
     init {
-        onEvent(LocationDetailEvent.LoadLocation)
+        loadLocation()
     }
 
     fun onEvent(event: LocationDetailEvent) {
@@ -40,13 +42,13 @@ class LocationDetailViewModel(
     }
 
     fun loadLocation() {
-        loadJob?.cancel()
-        loadJob = viewModelScope.launch {
+        viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, hasError = false) }
-            delay(2000)
             try {
-                val location = LocationDb().getLocationById(locationId)
-                _uiState.update { it.copy(isLoading = false, data = location, hasError = false) }
+                locationDao.getLocationById(locationId).collectLatest { entity ->
+                    val location = entity?.mapToModel()
+                    _uiState.update { it.copy(isLoading = false, data = location, hasError = false) }
+                }
             } catch (e: Exception) {
                 _uiState.update { it.copy(isLoading = false, hasError = true) }
             }
@@ -54,7 +56,6 @@ class LocationDetailViewModel(
     }
 
     fun setError() {
-        loadJob?.cancel()
         _uiState.update { it.copy(isLoading = false, hasError = true) }
     }
 }

@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -25,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -37,7 +40,7 @@ import com.example.lab7.core.ui.commonComponents.LoadingScreen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CharacterDetailScreen(
-    viewModel: com.example.lab7.ui.screens.Characters.Detail.CharacterDetailViewModel = viewModel(),
+    viewModel: CharacterDetailViewModel = viewModel(),
     onBackClick: () -> Unit
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -61,6 +64,18 @@ fun CharacterDetailScreen(
                         )
                     }
                 },
+                actions = {
+                    val character = state.data
+                    if (character != null) {
+                        IconButton(onClick = { viewModel.onEvent(CharacterDetailEvent.ToggleFavorite) }) {
+                            Icon(
+                                imageVector = if (character.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                                contentDescription = "Favorite",
+                                tint = if (character.isFavorite) Color.Red else MaterialTheme.colorScheme.surface
+                            )
+                        }
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.onPrimaryContainer
                 )
@@ -71,15 +86,14 @@ fun CharacterDetailScreen(
             state.isLoading -> {
                 LoadingScreen(
                     modifier = Modifier.padding(innerPadding),
-                    message = "Cargando",
-                    onClick = { viewModel.setError() }
+                    message = "Cargando"
                 )
             }
             state.hasError -> {
                 ErrorScreen(
                     modifier = Modifier.padding(innerPadding),
                     errorMessage = "Error al obtener detalle de personaje.",
-                    onRetry = { viewModel.loadCharacter() }
+                    onRetry = { viewModel.onEvent(CharacterDetailEvent.LoadCharacter) }
                 )
             }
             else -> {
@@ -114,15 +128,15 @@ fun CharacterDetailScreen(
                                 .padding(horizontal = 48.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
-                            _root_ide_package_.com.example.lab7.ui.screens.Characters.Detail.DetailRow(
+                            DetailRow(
                                 label = "Species:",
                                 value = character.species
                             )
-                            _root_ide_package_.com.example.lab7.ui.screens.Characters.Detail.DetailRow(
+                            DetailRow(
                                 label = "Status:",
                                 value = character.status
                             )
-                            _root_ide_package_.com.example.lab7.ui.screens.Characters.Detail.DetailRow(
+                            DetailRow(
                                 label = "Gender:",
                                 value = character.gender
                             )

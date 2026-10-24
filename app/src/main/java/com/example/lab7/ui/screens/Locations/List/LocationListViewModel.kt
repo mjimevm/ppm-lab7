@@ -1,24 +1,25 @@
 package com.example.lab7.ui.screens.Locations.List
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.lab7.ui.screens.Locations.Classes.LocationDb
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import com.example.lab7.data.local.AppDatabase
+import com.example.lab7.ui.screens.Locations.Classes.mapToModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class LocationListViewModel : ViewModel() {
+class LocationListViewModel(application: Application) : AndroidViewModel(application) {
+    private val locationDao = AppDatabase.getDatabase(application).locationDao()
+
     private val _uiState = MutableStateFlow(LocationListUiState())
     val uiState: StateFlow<LocationListUiState> = _uiState.asStateFlow()
 
-    private var loadJob: Job? = null
-
     init {
-        onEvent(LocationListEvent.LoadLocations)
+        loadLocations()
     }
 
     fun onEvent(event: LocationListEvent) {
@@ -29,13 +30,13 @@ class LocationListViewModel : ViewModel() {
     }
 
     fun loadLocations() {
-        loadJob?.cancel()
-        loadJob = viewModelScope.launch {
+        viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, hasError = false) }
-            delay(4000)
             try {
-                val locations = LocationDb().getAllLocations()
-                _uiState.update { it.copy(isLoading = false, data = locations, hasError = false) }
+                locationDao.getLocations().collectLatest { entities ->
+                    val locations = entities.map { it.mapToModel() }
+                    _uiState.update { it.copy(isLoading = false, data = locations, hasError = false) }
+                }
             } catch (e: Exception) {
                 _uiState.update { it.copy(isLoading = false, hasError = true) }
             }
@@ -43,7 +44,6 @@ class LocationListViewModel : ViewModel() {
     }
 
     fun setError() {
-        loadJob?.cancel()
         _uiState.update { it.copy(isLoading = false, hasError = true) }
     }
 }

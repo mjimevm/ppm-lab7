@@ -1,60 +1,64 @@
 package com.example.lab7.ui.screens.Characters.Detail
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.lab7.core.navigation.CharacterDetailDestination
-import com.example.lab7.ui.screens.Characters.Classes.CharacterDb
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import com.example.lab7.data.local.AppDatabase
+import com.example.lab7.ui.screens.Characters.Classes.mapToModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CharacterDetailViewModel(
+    application: Application,
     savedStateHandle: SavedStateHandle
-) : ViewModel() {
+) : AndroidViewModel(application) {
     private val characterId: Int = try {
         savedStateHandle.toRoute<CharacterDetailDestination>().characterId
     } catch (e: Exception) {
         1
     }
 
-    private val _uiState = MutableStateFlow(_root_ide_package_.com.example.lab7.ui.screens.Characters.Detail.CharacterDetailUiState())
-    val uiState: StateFlow<com.example.lab7.ui.screens.Characters.Detail.CharacterDetailUiState> = _uiState.asStateFlow()
+    private val characterDao = AppDatabase.getDatabase(application).characterDao()
 
-    private var loadJob: Job? = null
+    private val _uiState = MutableStateFlow(CharacterDetailUiState())
+    val uiState: StateFlow<CharacterDetailUiState> = _uiState.asStateFlow()
 
     init {
-        onEvent(_root_ide_package_.com.example.lab7.ui.screens.Characters.Detail.CharacterDetailEvent.LoadCharacter)
+        loadCharacter()
     }
 
-    fun onEvent(event: com.example.lab7.ui.screens.Characters.Detail.CharacterDetailEvent) {
+    fun onEvent(event: CharacterDetailEvent) {
         when (event) {
             is CharacterDetailEvent.LoadCharacter -> loadCharacter()
-            is CharacterDetailEvent.SetError -> setError()
+            is CharacterDetailEvent.ToggleFavorite -> toggleFavorite()
         }
     }
 
-    fun loadCharacter() {
-        loadJob?.cancel()
-        loadJob = viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, hasError = false) }
-            delay(2000)
+    private fun loadCharacter() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
             try {
-                val character = CharacterDb().getCharacterById(characterId)
-                _uiState.update { it.copy(isLoading = false, data = character, hasError = false) }
+                characterDao.getCharacterById(characterId).collectLatest { entity ->
+                    val character = entity?.mapToModel()
+                    _uiState.update { it.copy(isLoading = false, data = character, hasError = false) }
+                }
             } catch (e: Exception) {
                 _uiState.update { it.copy(isLoading = false, hasError = true) }
             }
         }
     }
 
-    fun setError() {
-        loadJob?.cancel()
-        _uiState.update { it.copy(isLoading = false, hasError = true) }
+    private fun toggleFavorite() {
+        val currentCharacter = _uiState.value.data ?: return
+        viewModelScope.launch {
+            characterDao.updateFavorite(currentCharacter.id, !currentCharacter.isFavorite)
+        }
     }
 }

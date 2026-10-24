@@ -95,7 +95,7 @@ fun ProfileScreen(
                     .padding(horizontal = 48.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                DetailRow(label = "Nombre:", value = userName ?: "María Jimena Vásquez")
+                DetailRow(label = "Nombre:", value = userName ?: "Usuario")
                 DetailRow(label = "Carnet:", value = "25092")
             }
             OutlinedButton(
