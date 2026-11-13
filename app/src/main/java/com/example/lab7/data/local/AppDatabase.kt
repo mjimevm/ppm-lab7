@@ -9,7 +9,7 @@ import com.example.lab7.data.local.dao.LocationDao
 import com.example.lab7.data.local.entity.CharacterEntity
 import com.example.lab7.data.local.entity.LocationEntity
 
-@Database(entities = [CharacterEntity::class, LocationEntity::class], version = 1, exportSchema = false)
+@Database(entities = [CharacterEntity::class, LocationEntity::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun characterDao(): CharacterDao
     abstract fun locationDao(): LocationDao
@@ -24,7 +24,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "app_database"
-                ).build()
+                )
+                .fallbackToDestructiveMigration(true)
+                .build()
                 INSTANCE = instance
                 instance
             }

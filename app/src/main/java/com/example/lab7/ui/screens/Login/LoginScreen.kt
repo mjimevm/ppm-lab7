@@ -104,14 +104,10 @@ fun LoginScreen(
             Button(
                 onClick = {
                     if (nameInput.isNotBlank() && !isSyncing) {
-                        viewModel.saveUserName(nameInput) {
-                            onStartClick()
-                        }
+                        viewModel.saveUserName(nameInput)
                     }
                 },
-                modifier = Modifier
-                    .width(280.dp)
-                    .height(48.dp),
+                modifier = Modifier.width(280.dp).height(48.dp),
                 shape = RoundedCornerShape(24.dp),
                 enabled = !isSyncing,
                 colors = ButtonDefaults.buttonColors(

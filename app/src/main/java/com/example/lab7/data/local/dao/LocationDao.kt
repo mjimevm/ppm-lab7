@@ -18,6 +18,9 @@ interface LocationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLocations(locations: List<LocationEntity>)
 
+    @Query("UPDATE locations SET isFavorite = :isFavorite WHERE id = :id")
+    suspend fun updateFavorite(id: Int, isFavorite: Boolean)
+
     @Query("DELETE FROM locations")
     suspend fun deleteAllLocations()
 

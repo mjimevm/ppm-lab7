@@ -5,5 +5,6 @@ import com.example.lab7.ui.screens.Locations.Classes.Location
 data class LocationListUiState(
     val isLoading: Boolean = true,
     val data: List<Location> = emptyList(),
-    val hasError: Boolean = false
+    val hasError: Boolean = false,
+    val filter: LocationFilter = LocationFilter.ALL
 )

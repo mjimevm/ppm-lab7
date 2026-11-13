@@ -6,7 +6,8 @@ data class Location(
     val id: Int,
     val name: String,
     val type: String,
-    val dimension: String
+    val dimension: String,
+    val isFavorite: Boolean = false
 )
 
 fun Location.mapToEntity(): LocationEntity {
@@ -14,7 +15,8 @@ fun Location.mapToEntity(): LocationEntity {
         id = id,
         name = name,
         type = type,
-        dimension = dimension
+        dimension = dimension,
+        isFavorite = isFavorite
     )
 }
 
@@ -23,6 +25,7 @@ fun LocationEntity.mapToModel(): Location {
         id = id,
         name = name,
         type = type,
-        dimension = dimension
+        dimension = dimension,
+        isFavorite = isFavorite
     )
 }

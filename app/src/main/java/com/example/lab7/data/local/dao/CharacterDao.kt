@@ -18,12 +18,21 @@ interface CharacterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCharacters(characters: List<CharacterEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCharacter(character: CharacterEntity)
+
     @Query("UPDATE characters SET isFavorite = :isFavorite WHERE id = :id")
     suspend fun updateFavorite(id: Int, isFavorite: Boolean)
+
+    @Query("DELETE FROM characters WHERE id = :id")
+    suspend fun deleteCharacter(id: Int)
 
     @Query("DELETE FROM characters")
     suspend fun deleteAllCharacters()
 
     @Query("SELECT COUNT(*) FROM characters")
     suspend fun getCharacterCount(): Int
+
+    @Query("SELECT MAX(id) FROM characters")
+    suspend fun getMaxId(): Int?
 }

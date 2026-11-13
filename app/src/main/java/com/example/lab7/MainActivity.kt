@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
                         _root_ide_package_.com.example.lab7.ui.screens.Login.LoginScreen(
                             onStartClick = {
                                 navController.navigate(AppGraph) {
-                                    popUpTo(LoginDestination) { inclusive = true }
+                                    popUpTo<LoginDestination> { inclusive = true }
                                 }
                             }
                         )

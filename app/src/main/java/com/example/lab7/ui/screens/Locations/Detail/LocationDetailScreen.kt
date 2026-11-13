@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,13 +23,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lab7.core.ui.commonComponents.ErrorScreen
 import com.example.lab7.ui.screens.Characters.Detail.DetailRow
 import com.example.lab7.core.ui.commonComponents.LoadingScreen
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,6 +56,18 @@ fun LocationDetailScreen(
                             contentDescription = "Back",
                             tint = MaterialTheme.colorScheme.surface
                         )
+                    }
+                },
+                actions = {
+                    val location = state.data
+                    if (location != null) {
+                        IconButton(onClick = { viewModel.onEvent(LocationDetailEvent.ToggleFavorite) }) {
+                            Icon(
+                                imageVector = if (location.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                                contentDescription = "Favorite",
+                                tint = if (location.isFavorite) Color.Red else MaterialTheme.colorScheme.surface
+                            )
+                        }
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

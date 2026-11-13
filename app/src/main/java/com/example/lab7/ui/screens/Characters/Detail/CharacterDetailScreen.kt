@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,6 +26,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,6 +41,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.lab7.core.ui.commonComponents.ErrorScreen
 import com.example.lab7.core.ui.commonComponents.LoadingScreen
+import com.example.lab7.ui.screens.Characters.List.CharacterFormDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,6 +50,7 @@ fun CharacterDetailScreen(
     onBackClick: () -> Unit
 ) {
     val state by viewModel.uiState.collectAsState()
+    var showEditDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -73,6 +80,17 @@ fun CharacterDetailScreen(
                                 contentDescription = "Favorite",
                                 tint = if (character.isFavorite) Color.Red else MaterialTheme.colorScheme.surface
                             )
+                        }
+                        IconButton(onClick = { showEditDialog = true }) {
+                            Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit", tint = MaterialTheme.colorScheme.surface)
+                        }
+                        IconButton(
+                            onClick = {
+                                viewModel.onEvent(CharacterDetailEvent.DeleteCharacter(character.id))
+                                onBackClick()
+                            }
+                        ) {
+                            Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.surface)
                         }
                     }
                 },
@@ -151,6 +169,21 @@ fun CharacterDetailScreen(
                     }
                 }
             }
+        }
+    }
+
+    if (showEditDialog) {
+        val character = state.data
+        if (character != null) {
+            CharacterFormDialog(
+                title = "Edit Character",
+                initialCharacter = character,
+                onDismiss = { showEditDialog = false },
+                onSave = { name, status, species, gender, image ->
+                    viewModel.onEvent(CharacterDetailEvent.UpdateCharacter(character.id, name, status, species, gender, image))
+                    showEditDialog = false
+                }
+            )
         }
     }
 }
