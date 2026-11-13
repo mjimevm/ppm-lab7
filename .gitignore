@@ -27,7 +27,6 @@ replay_pid*
 .kotlin/
 .idea/
 
-*.apk
 *.ap_
 *.aab
 *.dex
